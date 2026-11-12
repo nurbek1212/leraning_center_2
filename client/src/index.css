@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Ranglar: kunduzgi va tungi rejim ===== */
+:root {
+  --app-bg: 244 246 251;
+  --surface: 255 255 255;
+  --slate-50: 248 250 252;
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+  --slate-800: 30 41 59;
+  --slate-900: 15 23 42;
+  color-scheme: light;
+}
+
+/* Tungi rejimda neytral shkala teskari bo'ladi: "slate-900" yorqin matn, "slate-50" qorong'u fon */
+.dark {
+  --app-bg: 10 14 28;
+  --surface: 19 26 46;
+  --slate-50: 24 32 54;
+  --slate-100: 31 41 66;
+  --slate-200: 46 58 88;
+  --slate-300: 66 79 112;
+  --slate-400: 122 135 163;
+  --slate-500: 150 162 186;
+  --slate-600: 178 188 208;
+  --slate-700: 204 213 229;
+  --slate-800: 227 233 242;
+  --slate-900: 244 247 251;
+  color-scheme: dark;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply text-slate-800 antialiased;
+    background-color: rgb(var(--app-bg));
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    background: theme('colors.brand.100');
+  }
+  /* Klaviatura bilan ishlaganda aniq ko'rinadigan fokus */
+  :focus-visible {
+    outline: 2px solid theme('colors.brand.500');
+    outline-offset: 2px;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
+  /* Raqamlar ustunda tekis turishi uchun */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200/70 bg-white shadow-card;
+  }
+  .input {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-brand focus:ring-4 focus:ring-brand/15 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-sm hover:from-brand-600 hover:to-brand-700;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50;
+  }
+  .btn-danger {
+    @apply btn bg-gradient-to-b from-red-500 to-red-600 text-white shadow-sm hover:from-red-600 hover:to-red-700;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-100;
+  }
+  .icon-btn {
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-800;
+  }
+  .th {
+    @apply whitespace-nowrap px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500;
+  }
+  .td {
+    @apply px-4 py-3.5 text-sm text-slate-700;
+  }
+}
+
+
+/* ===== Tungi rejim: oq fon va rangli "yengil" tuslar ===== */
+.dark .bg-white { background-color: rgb(var(--surface)); }
+.dark .bg-white\/80 { background-color: rgb(var(--surface) / 0.8); }
+.dark .bg-slate-900\/50 { background-color: rgb(0 0 0 / 0.6); }
+
+/* Brend tuslari */
+.dark .bg-brand-50 { background-color: rgb(59 130 246 / 0.14); }
+.dark .bg-brand-50\/40 { background-color: rgb(59 130 246 / 0.1); }
+.dark .bg-brand-100 { background-color: rgb(59 130 246 / 0.22); }
+.dark .border-brand-100 { border-color: rgb(59 130 246 / 0.3); }
+.dark .text-brand-700 { color: #93c5fd; }
+.dark .text-brand-600 { color: #60a5fa; }
+.dark .hover\:text-brand-600:hover { color: #93c5fd; }
+.dark .text-brand-400 { color: #93c5fd; }
+.dark .hover\:bg-brand-100:hover { background-color: rgb(59 130 246 / 0.3); }
+
+/* Holat ranglari (Badge, ogohlantirish qutilari) */
+.dark .bg-emerald-50 { background-color: rgb(16 185 129 / 0.14); }
+.dark .bg-rose-50 { background-color: rgb(244 63 94 / 0.14); }
+.dark .bg-amber-50 { background-color: rgb(245 158 11 / 0.14); }
+.dark .bg-sky-50 { background-color: rgb(14 165 233 / 0.14); }
+.dark .hover\:bg-rose-50:hover, .dark .hover\:\!bg-rose-50:hover { background-color: rgb(244 63 94 / 0.18) !important; }
+.dark .ring-emerald-100, .dark .border-emerald-200 { --tw-ring-color: rgb(16 185 129 / 0.3); border-color: rgb(16 185 129 / 0.3); }
+.dark .ring-rose-100, .dark .border-rose-200 { --tw-ring-color: rgb(244 63 94 / 0.3); border-color: rgb(244 63 94 / 0.3); }
+.dark .ring-amber-100, .dark .border-amber-200 { --tw-ring-color: rgb(245 158 11 / 0.3); border-color: rgb(245 158 11 / 0.3); }
+.dark .text-emerald-600, .dark .text-emerald-700, .dark .text-emerald-800 { color: #6ee7b7; }
+.dark .text-rose-600, .dark .text-rose-700 { color: #fda4af; }
+.dark .text-amber-700, .dark .text-amber-800 { color: #fcd34d; }
+.dark .hover\:text-rose-600:hover, .dark .hover\:\!text-rose-600:hover { color: #fda4af !important; }
+
+/* Jadval va grafiklar */
+.dark .recharts-cartesian-grid line { stroke: rgb(var(--slate-200)); }
+.recharts-text, .recharts-cartesian-axis-tick-value { fill: rgb(var(--slate-500)); }
+.recharts-default-tooltip { background-color: rgb(var(--surface)) !important; border-color: rgb(var(--slate-200)) !important; color: rgb(var(--slate-800)); }
+.recharts-tooltip-cursor { fill: rgb(var(--slate-100)) !important; }
