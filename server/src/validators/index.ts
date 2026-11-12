@@ -111,7 +111,7 @@ export const groupSchema = z.object({
   teacherId: id,
   schedule: z.string().trim().max(100).optional().nullable(),
   price: z.coerce
-    .number({ invalid_type_error: "Narx son bo'lishi kerak" })
+    .number({ error: "Narx son bo'lishi kerak" })
     .int("Narx butun son bo'lishi kerak")
     .min(0, "Narx manfiy bo'lmasligi kerak")
     .max(100_000_000, 'Narx juda katta')
@@ -128,7 +128,7 @@ const componentSchema = z.object({
     .min(2, "Mezon nomi kamida 2 ta belgidan iborat bo'lishi kerak")
     .max(100, 'Mezon nomi 100 belgidan oshmasligi kerak'),
   maxScore: z.coerce
-    .number({ invalid_type_error: "Ball son bo'lishi kerak" })
+    .number({ error: "Ball son bo'lishi kerak" })
     .int("Ball butun son bo'lishi kerak")
     .min(1, "Ball kamida 1 bo'lishi kerak")
     .max(100, "Ball 100 dan oshmasligi kerak"),
@@ -163,7 +163,7 @@ export const gradingSchemeSchema = z
 // ---------- Baholar ----------
 
 const score = z.coerce
-  .number({ invalid_type_error: "Ball son bo'lishi kerak" })
+  .number({ error: "Ball son bo'lishi kerak" })
   .int("Ball butun son bo'lishi kerak")
   .min(0, "Ball 0 dan kam bo'lmasligi kerak")
   .max(100, "Ball 100 dan oshmasligi kerak");
@@ -198,7 +198,7 @@ export const attendanceCreateSchema = z.object({
       z.object({
         studentId: id,
         status: z.enum(['present', 'absent'], {
-          errorMap: () => ({ message: "Holat 'present' yoki 'absent' bo'lishi kerak" }),
+          error: "Holat 'present' yoki 'absent' bo'lishi kerak",
         }),
       })
     )
@@ -226,12 +226,12 @@ export const paymentCreateSchema = z.object({
   groupId: id,
   period,
   amount: z.coerce
-    .number({ invalid_type_error: "Summa son bo'lishi kerak" })
+    .number({ error: "Summa son bo'lishi kerak" })
     .int("Summa butun son bo'lishi kerak")
     .min(1, "Summa 0 dan katta bo'lishi kerak")
     .max(1_000_000_000, 'Summa juda katta'),
   method: z.enum(['cash', 'card', 'transfer'], {
-    errorMap: () => ({ message: "To'lov usuli noto'g'ri" }),
+    error: "To'lov usuli noto'g'ri",
   }),
   note: z.string().trim().max(255, "Izoh 255 belgidan oshmasligi kerak").optional().nullable(),
 });
@@ -239,7 +239,7 @@ export const paymentCreateSchema = z.object({
 export const checkoutSchema = z.object({
   groupId: id,
   period,
-  provider: z.enum(['payme', 'click'], { errorMap: () => ({ message: "To'lov tizimi noto'g'ri" }) }),
+  provider: z.enum(['payme', 'click'], { error: "To'lov tizimi noto'g'ri" }),
 });
 
 // ---------- Mavzular va materiallar ----------
@@ -255,7 +255,7 @@ export const topicSchema = z.object({
 
 // Fayl tanasi to'g'ridan-to'g'ri yuboriladi, shuning uchun ma'lumotlar query orqali keladi
 export const materialUploadQuery = z.object({
-  kind: z.enum(['lecture', 'presentation', 'other'], { errorMap: () => ({ message: "Material turi noto'g'ri" }) }),
+  kind: z.enum(['lecture', 'presentation', 'other'], { error: "Material turi noto'g'ri" }),
   title: z.string().trim().min(2, "Material nomi kamida 2 ta belgidan iborat bo'lishi kerak").max(200, 'Material nomi 200 belgidan oshmasligi kerak'),
   filename: z.string().trim().min(1, 'Fayl nomi kerak').max(400),
 });
@@ -263,8 +263,8 @@ export const materialUploadQuery = z.object({
 
 // ---------- Nazoratlar ----------
 
-const stageEnum = z.enum(['current', 'midterm', 'final'], { errorMap: () => ({ message: "Nazorat turi noto'g'ri" }) });
-const formatEnum = z.enum(['test', 'written', 'oral'], { errorMap: () => ({ message: "Nazorat shakli noto'g'ri" }) });
+const stageEnum = z.enum(['current', 'midterm', 'final'], { error: "Nazorat turi noto'g'ri" });
+const formatEnum = z.enum(['test', 'written', 'oral'], { error: "Nazorat shakli noto'g'ri" });
 
 const assessmentBase = {
   title: z.string().trim().min(2, "Nom kamida 2 ta belgidan iborat bo'lishi kerak").max(200, "Nom 200 belgidan oshmasligi kerak"),
@@ -293,7 +293,7 @@ export const assessmentListQuery = z.object({ groupId: id.optional() });
 export const assessmentComponentsQuery = z.object({ groupId: id });
 
 export const assessmentStatusSchema = z.object({
-  status: z.enum(['draft', 'open', 'closed'], { errorMap: () => ({ message: "Holat noto'g'ri" }) }),
+  status: z.enum(['draft', 'open', 'closed'], { error: "Holat noto'g'ri" }),
 });
 
 export const assessmentQuestionsSchema = z.object({

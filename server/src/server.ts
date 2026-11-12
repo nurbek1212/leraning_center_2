@@ -12,7 +12,7 @@ async function start() {
     process.exit(1);
   }
 
-  app.listen(env.port, () => {
+  app.listen(env.port, '0.0.0.0', () => {
     console.log(`Server http://localhost:${env.port} da ishlayapti`);
   });
 }
